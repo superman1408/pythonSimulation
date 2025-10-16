@@ -423,6 +423,23 @@ while env.now < sim_end:
     """)
 
     # Gantt Chart
+    
+    # Gantt Chart
+    if not df_events.empty:
+        fig_gantt = px.timeline(
+            df_events,
+            x_start="Start",
+            x_end="End",
+            y="JobID",
+            color="Process"
+        )
+        fig_gantt.update_xaxes(type="linear", title="Simulation Time (minutes)")
+        fig_gantt.update_yaxes(autorange="reversed")
+        fig_gantt.update_layout(title="Gantt Chart", height=500)
+        gantt_ph.plotly_chart(fig_gantt, use_container_width=True)
+    else:
+        gantt_ph.warning("No events yet. Run a few simulation steps for the Gantt chart to appear.")
+
     if not df_events.empty:
         fig_gantt = px.timeline(df_events, x_start="Start", x_end="End", y="JobID", color="Process")
         fig_gantt.update_yaxes(autorange="reversed")
