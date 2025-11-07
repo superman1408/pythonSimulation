@@ -423,8 +423,10 @@ if st.button("▶️ Run Real-Time Simulation"):
         # final gantt
         final_fig = plot_gantt_live(df_records.to_dict("records"), {}, sim_time)
         st.subheader("🚀 Final Gantt (finished stages)")
-        st.pyplot(final_fig)
-        plt.close(final_fig)
+        # st.pyplot(final_fig)
+        # plt.close(final_fig)
+        st.pyplot(final_fig, clear_figure=True)
+
 
         # final scurve
         s_df, ideal_df = build_scurve_live(df_records.to_dict("records"), {}, sim_time)
@@ -434,8 +436,10 @@ if st.button("▶️ Run Real-Time Simulation"):
             axf.plot(ideal_df["Week"], ideal_df["Completion (%)"], label="Ideal (sigmoid)", color="orange", linestyle="--")
         axf.set_xlabel("Week"); axf.set_ylabel("Completion (%)"); axf.set_ylim(0,100)
         axf.set_title("Final S-Curve"); axf.legend(); axf.grid(True)
-        st.pyplot(fig_final)
-        plt.close(fig_final)
+        # st.pyplot(fig_final)
+        # plt.close(fig_final)
+        st.pyplot(fig_final, clear_figure=True)
+
 
     # ensure per-ship bars show final percents
     per_done = {}
