@@ -3,3 +3,7 @@ simpy
 pandas
 matplotlib
 plotly
+numpy
+time
+random
+time
