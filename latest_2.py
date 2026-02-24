@@ -364,6 +364,7 @@ def snapshot_callback(finished_records, in_progress, env_now):
     # update live Gantt & S-curve
     fig = plot_gantt_live(finished_records_global, in_progress_global, sim_time)
     gantt_placeholder.pyplot(fig)
+    plt.close(fig)
     s_df, ideal_df = build_scurve_live(finished_records_global, in_progress_global, sim_time)
     fig_s, ax = plt.subplots(figsize=(10,4))
     ax.plot(s_df["Week"], s_df["Completion (%)"], label="Actual (partial)", color="tab:blue")
@@ -372,6 +373,7 @@ def snapshot_callback(finished_records, in_progress, env_now):
     ax.set_xlabel("Week"); ax.set_ylabel("Completion (%)"); ax.set_ylim(0,100)
     ax.set_title("Live S-Curve (Actual vs Ideal)"); ax.legend(); ax.grid(True)
     scurve_placeholder.pyplot(fig_s)
+    plt.close(fig_s)
     # small report snapshot
     rec_list = []
     for r in finished_records_global:
@@ -421,7 +423,10 @@ if st.button("▶️ Run Real-Time Simulation"):
         # final gantt
         final_fig = plot_gantt_live(df_records.to_dict("records"), {}, sim_time)
         st.subheader("🚀 Final Gantt (finished stages)")
-        st.pyplot(final_fig)
+        # st.pyplot(final_fig)
+        # plt.close(final_fig)
+        st.pyplot(final_fig, clear_figure=True)
+
 
         # final scurve
         s_df, ideal_df = build_scurve_live(df_records.to_dict("records"), {}, sim_time)
@@ -431,7 +436,10 @@ if st.button("▶️ Run Real-Time Simulation"):
             axf.plot(ideal_df["Week"], ideal_df["Completion (%)"], label="Ideal (sigmoid)", color="orange", linestyle="--")
         axf.set_xlabel("Week"); axf.set_ylabel("Completion (%)"); axf.set_ylim(0,100)
         axf.set_title("Final S-Curve"); axf.legend(); axf.grid(True)
-        st.pyplot(fig_final)
+        # st.pyplot(fig_final)
+        # plt.close(fig_final)
+        st.pyplot(fig_final, clear_figure=True)
+
 
     # ensure per-ship bars show final percents
     per_done = {}
